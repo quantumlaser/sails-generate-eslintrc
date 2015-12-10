@@ -1,11 +1,18 @@
 {
   "name": "sails-generate-eslintrc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "generate eslint config file which contains sails's globals",
   "main": "generate.js",
+  "bin": "node ./generate.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "eslint",
+    "sails",
+    "generate",
+    "eslintrc"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quantumlaser/sails-generate-eslintrc.git"
