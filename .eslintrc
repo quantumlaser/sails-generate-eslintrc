@@ -1,0 +1,6 @@
+{
+	"extends": [
+		"google",
+		".eslintrc-sails"
+	]
+}
