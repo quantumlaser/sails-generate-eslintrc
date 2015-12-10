@@ -71,7 +71,8 @@ var establishEslintrc = function(answer) {
           process.exit(0);
         }
         // console.log(fd);
-        console.log(eslintConfigFileName + ' is established');
+        console.log(eslintConfigFileName + ' and ' +
+          sailsConfigFileName + ' are established');
         fs.writeFileSync(eslintConfigFileName,
           JSON.stringify({
             extends: ['google', sailsConfigFileName]
