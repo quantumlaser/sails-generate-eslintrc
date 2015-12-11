@@ -1,10 +1,10 @@
 # sails-generate-eslintrc
 
-##Description
+## Description
 Generate eslint config file which contains sails's globals.<br/>
 It will generate .eslintrc-sails and .eslintrc (if it exists, it will be updated).
 
-##Example
+## Example
 - .eslintrc-sails
     ```
     {
@@ -45,7 +45,7 @@ It will generate .eslintrc-sails and .eslintrc (if it exists, it will be updated
         }  
         ```  
 
-##Usage
+## Usage
 - global install
     + Install:
         ```
@@ -53,8 +53,8 @@ It will generate .eslintrc-sails and .eslintrc (if it exists, it will be updated
         ```
 
     + Run:
-        * You need run it under project root path in command line 
-        
+        * You need run it under project root path in command line
+
             ```
             sails-generate-eslintrc
             ```
@@ -66,9 +66,8 @@ It will generate .eslintrc-sails and .eslintrc (if it exists, it will be updated
         ```
 
     + Run:
-        * You need run it under project root path in command line 
-        
+        * You need run it under project root path in command line
+
             ```
             node_modules/.bin/sails-generate-eslintrc
             ```
-

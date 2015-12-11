@@ -6,12 +6,20 @@
 
 var program = require('commander');
 
+function list(val) {
+  return val.split(',');
+}
+
 program
-  .version('1.1.0')
-  .option('-c, --config <string>', 'Set eslint config file name')
-  .option('-p, --preset <string>', 'Set preset coding style')
-  .option('-g, --globals <items>', 'Input globals list')
-  .option('-f, --floder <items>', 'Input global floders list')
+  .version('1.1.1')
+  .option('-m, --mode <string>',
+    'Set mode for .eslintrc-sails: update, override(default)')
+  .option('-c, --config <path>', 'Set eslint config file name')
+  .option('-p, --preset <string>', 'Set preset coding style, like: google')
+  .option('-g, --globals <items>',
+    'Input globals list, like: sails, mysql', list)
+  .option('-f, --folders <items>',
+    'Input global folders list, like: api/controllers, config', list)
   .parse(process.argv);
 
 var fs = require('fs');
@@ -35,33 +43,75 @@ if (program.config) {
   // console.log(program.config);
   eslintConfigFileName = program.config;
 }
+if (program.globals) {
+  globalsList = globalsList.concat(program.globals);
+}
+if (program.folders) {
+  globalFoldersList = program.folders;
+}
 
+// console.log(program.folders);
 // add globals default
-var i;
-for (i = 0; i < globalsList.length; i++) {
-  globals[globalsList[i]] = true;
-}
-// add all file names
-for (i = 0; i < globalFoldersList.length; i++) {
-  globalsList = globalsList.concat(
-    fs.readdirSync(prefixPath + globalFoldersList[i])
-  );
-}
-// choose globas names by .js
-for (i = 0; i < globalsList.length; i++) {
-  var fileName = globalsList[i];
-  var suffix = fileName.substring(fileName.length - 3, fileName.length);
-  if (suffix === '.js' || suffix === '.JS') {
-    globals[fileName.substring(0, fileName.length - 3)] = true;
+var addGlobals = function() {
+  var i;
+  for (i = 0; i < globalsList.length; i++) {
+    globals[globalsList[i]] = true;
   }
+  // add all file names
+  for (i = 0; i < globalFoldersList.length; i++) {
+    globalsList = globalsList.concat(
+      fs.readdirSync(prefixPath + globalFoldersList[i])
+    );
+  }
+  // console.log(globalsList);
+  // choose globas names by .js
+  for (i = 0; i < globalsList.length; i++) {
+    var fileName = globalsList[i];
+    var suffix = fileName.substring(fileName.length - 3, fileName.length);
+    if (suffix === '.js' || suffix === '.JS') {
+      globals[fileName.substring(0, fileName.length - 3)] = true;
+    }
+  }
+};
+
+addGlobals();
+console.log(globals);
+
+if (program.mode) {
+  switch (program.mode.trim()) {
+    case 'update':
+      fs.exists(sailsConfigFileName, function(exists) {
+        if (exists) {
+          fs.readFile(sailsConfigFileName, 'utf-8', function(err, data) {
+            if (err) {
+              console.log('read file error!');
+            } else {
+              eslintrcSails = JSON.parse(data);
+              if (eslintrcSails.globals) {
+                eslintrcSails.globals = eslintrcSails.globals.concat(globals);
+              } else {
+                eslintrcSails.globals = globals;
+              }
+            }
+          });
+        }
+      });
+
+      break;
+    default:
+      console.log('default');
+      eslintrcSails.globals = globals;
+
+  }
+} else {
+  eslintrcSails.globals = globals;
 }
 
 // write globals to .eslintrc-sails
-eslintrcSails.globals = globals;
+// eslintrcSails.globals = globals;
+console.log(eslintrcSails);
 fs.writeFileSync(sailsConfigFileName,
   JSON.stringify(eslintrcSails, null, '\t'));
-
-// console.log(globals);
 
 var updateGlobals = function(err, data) {
   if (err) {

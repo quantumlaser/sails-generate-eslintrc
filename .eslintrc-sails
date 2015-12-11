@@ -1,7 +1,1 @@
-{
-	"globals": {
-		"sails": true,
-		"UserController": true,
-		"User": true
-	}
-}
+{}
