@@ -1,5 +1,19 @@
 #!/usr/bin/env node
 
+/**
+ * Module dependencies.
+ */
+
+var program = require('commander');
+
+program
+  .version('1.1.0')
+  .option('-c, --config <string>', 'Set eslint config file name')
+  .option('-p, --preset <string>', 'Set preset coding style')
+  .option('-g, --globals <items>', 'Input globals list')
+  .option('-f, --floder <items>', 'Input global floders list')
+  .parse(process.argv);
+
 var fs = require('fs');
 var readline = require('readline');
 
@@ -16,6 +30,11 @@ var prefixPath = './';
 var globalFoldersList = ['api/controllers', 'api/models', 'api/services'];
 var eslintConfigFileName = '.eslintrc';
 var sailsConfigFileName = '.eslintrc-sails';
+
+if (program.config) {
+  // console.log(program.config);
+  eslintConfigFileName = program.config;
+}
 
 // add globals default
 var i;

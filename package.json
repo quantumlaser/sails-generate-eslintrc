@@ -1,6 +1,6 @@
 {
   "name": "sails-generate-eslintrc",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "generate eslint config file which contains sails's globals",
   "main": "generate.js",
   "bin": "./generate.js",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/quantumlaser/sails-generate-eslintrc#readme",
   "dependencies": {
+    "commander": "^2.9.0",
     "eslint": "^1.10.3",
     "eslint-config-google": "^0.3.0"
   }
