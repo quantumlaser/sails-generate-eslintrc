@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+var _ = require('underscore');
 var program = require('commander');
 
 function list(val) {
@@ -13,7 +13,8 @@ function list(val) {
 program
   .version('1.1.1')
   .option('-m, --mode <string>',
-    'Set mode for .eslintrc-sails: update, override(default)')
+    'Set mode for .eslintrc-sails: update, override.' +
+      'Default: Add default globals')
   .option('-c, --config <path>', 'Set eslint config file name')
   .option('-p, --preset <string>', 'Set preset coding style, like: google')
   .option('-g, --globals <items>',
@@ -75,43 +76,61 @@ var addGlobals = function() {
 };
 
 addGlobals();
-console.log(globals);
+// console.log(globals);
 
 if (program.mode) {
   switch (program.mode.trim()) {
     case 'update':
       fs.exists(sailsConfigFileName, function(exists) {
         if (exists) {
-          fs.readFile(sailsConfigFileName, 'utf-8', function(err, data) {
-            if (err) {
-              console.log('read file error!');
+          var data = fs.readFileSync(sailsConfigFileName, 'utf-8');
+          if (data) {
+            eslintrcSails = JSON.parse(data);
+            if (eslintrcSails.globals) {
+              console.log(eslintrcSails.globals);
+              eslintrcSails.globals = _.extend(eslintrcSails.globals, globals);
             } else {
-              eslintrcSails = JSON.parse(data);
-              if (eslintrcSails.globals) {
-                eslintrcSails.globals = eslintrcSails.globals.concat(globals);
-              } else {
-                eslintrcSails.globals = globals;
-              }
+              eslintrcSails.globals = globals;
             }
+            console.log('ol');
+          } else {
+            console.log('read file error!');
+          }
+          fs.writeFileSync(sailsConfigFileName,
+            JSON.stringify(eslintrcSails, null, '\t'));
+        } else {
+          console.log(sailsConfigFileName +
+            'is not exists, it will be created');
+          eslintrcSails.globals = globals;
+          fs.open(sailsConfigFileName, 'w', function(err) {
+            if (err) {
+              console.log('error:' + err);
+              process.exit(0);
+            }
+            console.log(sailsConfigFileName + 'is created!');
+            fs.writeFileSync(sailsConfigFileName,
+              JSON.stringify(eslintrcSails, null, '\t'));
           });
         }
       });
 
       break;
     default:
-      console.log('default');
+      // console.log('default');
       eslintrcSails.globals = globals;
-
+      fs.writeFileSync(sailsConfigFileName,
+        JSON.stringify(eslintrcSails, null, '\t'));
   }
 } else {
+  // console.log('default2');
   eslintrcSails.globals = globals;
+  fs.writeFileSync(sailsConfigFileName,
+    JSON.stringify(eslintrcSails, null, '\t'));
 }
 
 // write globals to .eslintrc-sails
 // eslintrcSails.globals = globals;
-console.log(eslintrcSails);
-fs.writeFileSync(sailsConfigFileName,
-  JSON.stringify(eslintrcSails, null, '\t'));
+// console.log(eslintrcSails);
 
 var updateGlobals = function(err, data) {
   if (err) {
