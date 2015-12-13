@@ -1,6 +1,6 @@
 {
   "name": "sails-generate-eslintrc",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "generate eslint config file which contains sails's globals",
   "main": "index.js",
   "bin": "./index.js",

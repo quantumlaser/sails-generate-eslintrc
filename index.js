@@ -13,7 +13,7 @@ function list(val) {
 }
 
 program
-  .version('1.2.3')
+  .version('1.2.4')
   .option('-m, --mode <string>',
     'Set mode for .eslintrc-sails: append, override.' +
       'Default: Add default globals')
@@ -34,7 +34,7 @@ var globalsList = ['sails'];
 var globalFoldersList = ['api/controllers', 'api/models', 'api/services'];
 var eslintConfigFileName = '.eslintrc';
 var sailsConfigFileName = '.eslintrc-sails';
-var preset = 'google';
+var preset = null;
 
 if (program.config) {
   eslintConfigFileName = program.config;
