@@ -68,7 +68,8 @@ It will generate .eslintrc-sails(sails globals file ) and .eslintrc (eslint conf
         * You need run it under project root path in command line
 
             ```
-            sails-generate-eslintrc
+            sails-generate-eslintrc #add default globals and folders
+            sails-generate-eslintrc -g sails -f api/models -m override
             ```
 
 - install in project path

@@ -13,7 +13,7 @@ function list(val) {
 }
 
 program
-  .version('1.2.0')
+  .version('1.2.2')
   .option('-m, --mode <string>',
     'Set mode for .eslintrc-sails: append, override.' +
       'Default: Add default globals')
@@ -23,7 +23,7 @@ program
     'Input global folders list, like: api/controllers, config', list)
   .option('-c, --config <path>', 'Set eslint config file name')
   .option('-p, --preset <string>', 'Set preset coding style, like: google')
-  .option('-s, --show [value]', 'Show result')
+  .option('-s, --show [value]', 'Show globals added')
   .parse(process.argv);
 
 // var _ = require('underscore');
