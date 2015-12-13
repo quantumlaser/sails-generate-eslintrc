@@ -13,7 +13,7 @@ function list(val) {
 }
 
 program
-  .version('1.2.2')
+  .version('1.2.3')
   .option('-m, --mode <string>',
     'Set mode for .eslintrc-sails: append, override.' +
       'Default: Add default globals')
