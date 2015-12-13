@@ -65,11 +65,20 @@ It will generate .eslintrc-sails(sails globals file ) and .eslintrc (eslint conf
         ```
 
     + Run:
-        * You need run it under project root path in command line
+        * When you run it first:You can run it under project root path in command line.It will add [sails] and object under ['api/controllers', 'api/models', 'api/services']
 
             ```
-            sails-generate-eslintrc #add default globals and folders
-            sails-generate-eslintrc -g sails -f api/models -m override
+            sails-generate-eslintrc
+            ```
+        * When you want to append some globals:
+        
+            ```
+            sails-generate-eslintrc -g sails -f api/models -m append
+            ```
+
+        * When you want to override config file with globals given by paramters:
+            ```
+            sails-generate-eslintrc -g sails -f api/models -m append
             ```
 
 - install in project path
@@ -84,3 +93,10 @@ It will generate .eslintrc-sails(sails globals file ) and .eslintrc (eslint conf
             ```
             node_modules/.bin/sails-generate-eslintrc
             ```
+
+## Tips
+- extend: google
+    + If you want to use google or others as coding style, you may have to install:
+    ```
+    npm install eslint-config-google
+    ```
