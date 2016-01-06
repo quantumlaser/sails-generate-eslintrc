@@ -18,7 +18,7 @@
     "url": "git+https://github.com/quantumlaser/sails-generate-eslintrc.git"
   },
   "author": "wuzhaohui",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/quantumlaser/sails-generate-eslintrc/issues"
   },
