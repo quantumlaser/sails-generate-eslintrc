@@ -13,7 +13,7 @@ function list(val) {
 }
 
 program
-  .version('1.2.4')
+  .version('1.3.2')
   .option('-m, --mode <string>',
     'Set mode for .eslintrc-sails: append, override.' +
       'Default: Add default globals')
@@ -63,7 +63,7 @@ if (program.mode) {
       globalFoldersList = program.folders ?
         _.uniq(globalFoldersList.concat(program.folders)) : globalFoldersList;
       globals = generate.addGlobals(globalsList, globalFoldersList);
-      generate.overrideConfigFile(globals, sailsConfigFileName);
+      generate.appendConfigFile(globals, sailsConfigFileName);
 
   }
 } else {
@@ -72,7 +72,7 @@ if (program.mode) {
   globalFoldersList = program.folders ?
     _.uniq(globalFoldersList.concat(program.folders)) : globalFoldersList;
   globals = generate.addGlobals(globalsList, globalFoldersList);
-  generate.overrideConfigFile(globals, sailsConfigFileName);
+  generate.appendConfigFile(globals, sailsConfigFileName);
 }
 
 if (program.show) {
