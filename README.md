@@ -4,12 +4,9 @@
 Generate eslint config file which contains sails's globals.<br/>
 It will generate .eslintrc-sails(sails globals file ) and .eslintrc (eslint config file. If it exists, it will be updated).
 
-##TODO
-- change default mode to "append". If no globals added, the file is not changed.
-
 ## Parameter
 - -m --mode
-    + *Default* : Add default globals which contains [sails] and object under ['api/controllers', 'api/models', 'api/services']
+    + *Default* : Append default globals which contains [sails] and object under ['api/controllers', 'api/models', 'api/services']
     + append: Add other globals given by other parameters(-g, -f), which are appended in sails globals file(.eslintrc-sails)
     + override: Override sails globals file by other parameter(-g, -f). If no other parameters, an empty sails globals file(.eslintrc-sails) will be created.
 - -g --globals : Give globals array. Example: -g sails,test1,test2.
@@ -17,7 +14,6 @@ It will generate .eslintrc-sails(sails globals file ) and .eslintrc (eslint conf
 - -c --config : Set eslint config file name.
 - -p --preset : Set preset code style when creates a new eslint config file.
 - -s --show : Show globals added.
-
 
 ## Files Example
 - .eslintrc-sails

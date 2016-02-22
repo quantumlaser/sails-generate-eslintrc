@@ -1,6 +1,9 @@
 {
 	"globals": {
 		"sails": true,
+		"TestController": true,
+		"Test": true,
+		"TestService": true,
 		"UserController": true,
 		"User": true
 	}
