@@ -7,6 +7,7 @@ var generate = require('./lib/generate');
 var configure = require('./lib/configure');
 var _ = require('underscore');
 var program = require('commander');
+var findFile = require('fs-finder');
 
 function list(val) {
   return val.split(',');
@@ -16,7 +17,7 @@ program
   .version('1.3.2')
   .option('-m, --mode <string>',
     'Set mode for .eslintrc-sails: append, override.' +
-      'Default: Add default globals')
+    'Default: Add default globals')
   .option('-g, --globals <items>',
     'Input globals list, like: sails, mysql', list)
   .option('-f, --folders <items>',
@@ -32,26 +33,39 @@ var globals = {};
 var globalsList = ['sails'];
 // var prefixPath = './';
 var globalFoldersList = ['api/controllers', 'api/models', 'api/services'];
-var eslintConfigFileName = '.eslintrc';
+var eslintConfigFileName;
 var sailsConfigFileName = '.eslintrc-sails';
 var preset = null;
 
 if (program.config) {
   eslintConfigFileName = program.config;
+} else {
+  eslintConfigFileName = findFile.in(process.cwd()).showSystemFiles().findFiles('.eslintrc<(.json|.js|)$>')
+    .sort((a, b) => a.length > b.length)[0];
 }
+
+if (!eslintConfigFileName) {
+  console.warn('Can\'t found the eslintrc file.');
+  process.exit();
+} else {
+  console.info('Use ' + eslintConfigFileName + ' as eslintrc file.')
+}
+
 if (program.preset) {
   preset = program.preset;
 }
 
 if (program.mode) {
   switch (program.mode.trim()) {
-    case 'append': case 'a':
+    case 'append':
+    case 'a':
       globalsList = program.globals ? program.globals : [];
       globalFoldersList = program.folders ? program.folders : [];
       globals = generate.addGlobals(globalsList, globalFoldersList);
       generate.appendConfigFile(globals, sailsConfigFileName);
       break;
-    case 'override': case 'o':
+    case 'override':
+    case 'o':
       globalsList = program.globals ? program.globals : [];
       globalFoldersList = program.folders ? program.folders : [];
       globals = generate.addGlobals(globalsList, globalFoldersList);
